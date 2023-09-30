@@ -1,0 +1,315 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+p {
+  font-size: 1rem;
+  color: #65748b;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #314451;
+}
+th,
+td {
+  white-space: nowrap;
+}
+
+// Beginning Scroll Bar
+.scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(94, 156, 250, 0.3);
+  background-color: #a3a3a3;
+  border-radius: 8px;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.44, rgb(216, 138, 59)),
+    color-stop(0.72, rgb(213, 128, 43)),
+    color-stop(0.86, rgb(216, 138, 59))
+  );
+}
+
+.inner_scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.inner_scrollbar::-webkit-scrollbar {
+  width: 12px;
+  height: 5px;
+  background-color: #f5f5f5;
+}
+
+.inner_scrollbar::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 10px;
+  background-image: -webkit-linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.2) 75%,
+    transparent 75%,
+    transparent
+  );
+}
+
+// End Scroll Bar
+.custom_style .custom_boxshadow {
+  box-shadow: 0px 6px 16px #3469cb29;
+  border: 1px solid rgb(240, 240, 240);
+}
+.custom_style .custom_boxshadow2 {
+  box-shadow: 0 30px 30px -25px rgb(65 51 183 / 25%);
+}
+.img_fluid {
+  max-width: 100%;
+  height: auto;
+}
+.fixed_bottom {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+}
+//Beginning Custom button
+.main_btn {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  // background: #E16368;
+  color: #fff;
+  overflow: hidden;
+}
+.main_btn:hover {
+  color: #fff;
+  cursor: pointer;
+}
+.main_btn:before {
+  position: absolute;
+  content: "";
+  display: inline-block;
+  top: -180px;
+  left: 0;
+  width: 30px;
+  height: 100%;
+  background-color: #fff;
+  animation: shiny-btn1 3s ease-in-out infinite;
+}
+@keyframes shiny-btn1 {
+  0% {
+    -webkit-transform: scale(0) rotate(45deg);
+    opacity: 0;
+  }
+  80% {
+    -webkit-transform: scale(0) rotate(45deg);
+    opacity: 0.5;
+  }
+  81% {
+    -webkit-transform: scale(4) rotate(45deg);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(50) rotate(45deg);
+    opacity: 0;
+  }
+}
+//End Custom Button
+// Beginning Header
+.main_header .appbar {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+.custom_style .pulse-btn {
+  animation: cc-calto-action-ripple 0.6s linear infinite;
+}
+.custom_style .pulse-btn:hover {
+  background-color: #d88a3b;
+}
+@keyframes cc-calto-action-ripple {
+  0% {
+    -webkit-box-shadow: 0 4px 10px rgba(216, 138, 59, 0.2),
+      0 0 0 0 rgba(216, 138, 59, 0.2), 0 0 0 5px rgba(216, 138, 59, 0.2),
+      0 0 0 10px rgba(216, 138, 59, 0.2);
+    box-shadow: 0 4px 10px rgba(216, 138, 59, 0.2),
+      0 0 0 0 rgba(216, 138, 59, 0.2), 0 0 0 5px rgba(216, 138, 59, 0.2),
+      0 0 0 10px rgba(216, 138, 59, 0.2);
+  }
+  100% {
+    -webkit-box-shadow: 0 4px 10px rgba(216, 138, 59, 0.2),
+      0 0 0 5px rgba(216, 138, 59, 0.2), 0 0 0 10px rgba(216, 138, 59, 0.2),
+      0 0 0 20px rgba(216, 138, 59, 0);
+    box-shadow: 0 4px 10px rgba(216, 138, 59, 0.2),
+      0 0 0 5px rgba(216, 138, 59, 0.2), 0 0 0 10px rgba(216, 138, 59, 0.2),
+      0 0 0 20px rgba(216, 138, 59, 0);
+  }
+}
+// End Header
+
+// Form Page
+.details_section {
+  padding: 50px 0;
+}
+
+.details_section .insurance_form_block {
+  box-shadow: 0 0 24px 1px rgb(107 122 254 / 12%),
+    0 16px 34px -8px rgb(138 144 181 / 10%);
+}
+
+// footer
+.main_footer {
+  background: #f3f6f9;
+}
+.footer_logo_block {
+  width: 120px;
+}
+.main_footer .social_icon {
+  display: inline-block;
+  margin: 0 8px;
+}
+.main_footer .css-i4bv87-MuiSvgIcon-root {
+  color: #314451;
+  font-size: 30px;
+  transition: all 0.5s;
+}
+.main_footer .css-i4bv87-MuiSvgIcon-root:hover {
+  color: #d88a3b;
+  transition: all 0.5s;
+}
+.footer_bottom {
+  background-color: #e7ebf0;
+}
+// footer
+
+// Beginning Insurance Form
+.custom_style .custom_card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  width: 110px;
+  height: 100px;
+  margin-top: 10px;
+  box-shadow: 0 6px 16px rgb(52 105 203 / 16%);
+  border: 1px solid #ccc;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 8px;
+}
+.custom_style .custom_card2 {
+  width: 140px;
+  height: 40px;
+  padding: 10px 15px;
+  align-items: center;
+  justify-content: center;
+}
+.vehicle-details .custom_card2{
+  width: 80px;
+}
+.custom_card .MuiFormControlLabel-label {
+  font-size: 14px;
+}
+.custom_card
+  .css-wwx940-MuiButtonBase-root-MuiRadio-root.Mui-checked
+  + .MuiFormControlLabel-label {
+  color: #d88a3b;
+}
+
+// End Insurance Form
+
+// Beginning fule tab
+.fuel_tabs .css-19kzrtu {
+  padding: 0;
+}
+// End fule tab
+
+// Offer Card
+.offer_card {
+  box-shadow: 0 30px 30px -25px rgb(65 51 183 / 25%);
+}
+.offer_card .card_body {
+  border-radius: 12px;
+}
+.offer_card .card_price {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 25px 12px 0 25px;
+  padding: 0.225em 0.75em;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.custom_autocomplete_item {
+  display: inline-block;
+  font-size: 15px;
+  line-height: 20px;
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 8px;
+  border: 1px solid rgb(240, 240, 240);
+  box-shadow: 0px 6px 16px #3469cb29;
+}
+.custom_autocomplete_container {
+  width: 100%;
+}
+// Offer Card
+
+// Media Query
+@media only screen and (max-width: 900px) {
+  .details_section .insurance_img {
+    width: 70%;
+  }
+  .break_btn {
+    visibility: visible;
+    opacity: 1;
+    max-width: 55px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .main_footer .css-i4bv87-MuiSvgIcon-root {
+    font-size: 28px;
+  }
+  .custom_style .main_heading,
+  .custom_style .main_heading span {
+    font-size: 20px;
+  }
+
+  .custom_style.category_card {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .custom_style .custom_card {
+    flex-direction: row;
+    width: 90%;
+    height: 50px;
+    margin-left: 0;
+  }
+  .custom_autocomplete_item {
+    width: 100%;
+  }
+}
