@@ -62,10 +62,10 @@ export default function HorizontalLinearStepper(props) {
       await store.proposal.setVehicleDetails(obj);
       await store.proposal.saveVehicleDetails(obj);
       // Get Plan Terms and condition
-      await store.proposal.getPlanTnCData(EnqNo, item.PlanId);
-
+      const tnc = await store.proposal.getPlanTnCData(EnqNo, item.PlanId);
       setTimeout(async () => {
         await store.proposal.fetchRehitePremium(item);
+        EventEmitter.dispatch("tncData", tnc.data);
         activeStep === 3
           ? EventEmitter.dispatch("showPaymentMethod", true)
           : EventEmitter.dispatch("showPaymentMethod", false);

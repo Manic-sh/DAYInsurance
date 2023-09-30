@@ -205,6 +205,7 @@ export const Proposal = types
     },
     setTnCDetails(tnc) {
       self.tnc = tnc;
+      console.log("Self", tnc);
     },
     setIsListView(value) {
       self.IsListView = value;

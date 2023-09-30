@@ -32,7 +32,6 @@ import ChequeDetails from "./ChequeDetails";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import getCompanyImgName from "../common/CompanyImages";
-import { getSnapshot } from "mobx-state-tree";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -63,17 +62,17 @@ const Payment = (props) => {
   const [paymentMethods, setPaymentMethods] = useState("online");
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [html, setHtml] = useState("");
-  const [kycStatus, setKYCStatus] = useState(false);
-
+  const [kycStatus, setKYCStatus] = useState(true);
+  const [tncData, setTNCData] = useState({});
   const selectedItem = JSON.parse(sessionStorage.getItem("selectedItem"));
   const addOns = get(selectedItem, "Addons", "").split(",");
   const userInfo = store.login.getUserInfo();
-  const tncData = getSnapshot(store.proposal.tnc);
-  console.log(tncData);
+
   useEffect(() => {
     EventEmitter.subscribe("showPaymentMethod", (data) =>
       setShowPaymentButton(data)
     );
+    EventEmitter.subscribe("tncData", (data) => setTNCData(data));
   }, [showPaymentButton, html]);
 
   const getFullnameAddons = (addOns) => {
@@ -165,7 +164,7 @@ const Payment = (props) => {
       setKYCStatus(true);
     }
   };
-
+  console.log(tncData);
   return (
     <>
       <Backdrop
@@ -1153,10 +1152,22 @@ const Payment = (props) => {
                   justifyContent: "space-between",
                 }}
               >
-                <IconButton size="small" aria-label="step" color="inherit">
-                  <HelpIcon fontSize="small" />
-                </IconButton>
-                <Typography variant="body2" pt={1}></Typography>
+                {tncData?.Messages.map((msg, idx) => (
+                  <Box
+                    component="div"
+                    sx={{
+                      display: "flex",
+                      alignItems: "start",
+                      justifyContent: "space-between",
+                    }}
+                    key={idx} // Add a unique key if available
+                  >
+                    <IconButton size="small" aria-label="step" color="inherit">
+                      <HelpIcon fontSize="small" />
+                    </IconButton>
+                    <Typography variant="body2">{msg?.KycMessage}</Typography>
+                  </Box>
+                ))}
               </Box>
             </Grid>
           </Box>

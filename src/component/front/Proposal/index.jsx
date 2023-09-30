@@ -35,8 +35,6 @@ const Proposal = (props) => {
     });
   };
 
-  console.log("QuoteUpdate", item);
-
   const [loading, setLoading] = useState(true);
   const EnquiryNo = store.insurance.getEnqNo();
   const init = async () => {
