@@ -21,6 +21,8 @@ import Slide from "@mui/material/Slide";
 import Snackbar from "@mui/material/Snackbar";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
 import { get, size } from "lodash";
 import AddonsFullName from "../../../services/Addons";
 import AdditionalData, {
@@ -32,6 +34,18 @@ import ChequeDetails from "./ChequeDetails";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import getCompanyImgName from "../common/CompanyImages";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -57,23 +71,37 @@ const Payment = (props) => {
   const [expanded, setExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
-  const [checkedTerms, setCheckedTerms] = useState(false);
   const [showPaymentButton, setShowPaymentButton] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState("online");
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [html, setHtml] = useState("");
   const [kycStatus, setKYCStatus] = useState(true);
-  const [tncData, setTNCData] = useState({});
+  const [tncData, setTNCData] = useState(null);
+  const [checkedTerms, setCheckedTerms] = useState([]);
   const selectedItem = JSON.parse(sessionStorage.getItem("selectedItem"));
   const addOns = get(selectedItem, "Addons", "").split(",");
   const userInfo = store.login.getUserInfo();
+  const [openKycModal, setOpenKycModal] = React.useState(false);
+  const handleKycModalOpen = () => setOpenKycModal(true);
+  const handleKycModalClose = () => setOpenKycModal(false);
 
   useEffect(() => {
     EventEmitter.subscribe("showPaymentMethod", (data) =>
       setShowPaymentButton(data)
     );
-    EventEmitter.subscribe("tncData", (data) => setTNCData(data));
+    EventEmitter.subscribe("tncData", (data) => {
+      setTNCData(data);
+      setCheckedTerms(data?.Terms.map(() => false) || []);
+    });
   }, [showPaymentButton, html]);
+
+  const allTermsChecked = checkedTerms.every((isChecked) => isChecked);
+
+  const handleCheckboxChange = (index) => (e) => {
+    const updatedCheckedTerms = [...checkedTerms];
+    updatedCheckedTerms[index] = e.target.checked;
+    setCheckedTerms(updatedCheckedTerms);
+  };
 
   const getFullnameAddons = (addOns) => {
     const r = AddonsFullName.find((item) => {
@@ -110,16 +138,16 @@ const Payment = (props) => {
     if (checkedTerms) {
       const EnqNo = store.insurance.getEnqNo();
       const payload = {
-        EnquiryNo: parseInt(EnqNo),
+        EnquiryNo: parseInt(269357),
         Planid: parseInt(item.PlanId),
         Userid: get(userInfo, "Userid", ""),
       };
       setLoading(true);
       const hitRes = await store.proposal.saveProposalService(payload);
-      if (hitRes?.KYCStatus === "Fail") {
+      if (hitRes?.KYCStatus === "Fail" || true) {
         setKYCStatus(false);
         const url = hitRes?.KycUrl;
-        window.open(url, "_blank");
+        setOpenKycModal(true);
       } else if (hitRes.PaymentURLType === "HTML") {
         setHtml(hitRes.PaymentURL);
         const formId = document
@@ -139,17 +167,6 @@ const Payment = (props) => {
       setShowSnackbar(true);
     }
   };
-
-  async function getTncData() {
-    try {
-      const EnqNo = store.insurance.getEnqNo();
-      const tncData = await store.proposal.getPlanTnCData(EnqNo, 124);
-      console.log(tncData);
-    } catch (error) {
-      // Handle errors
-      console.error(error);
-    }
-  }
 
   const handleKYCCheck = async () => {
     const EnqNo = store.insurance.getEnqNo();
@@ -1050,23 +1067,33 @@ const Payment = (props) => {
                   sx={{
                     display: "flex",
                     alignItems: "start",
-                    flexDirection: "row",
+                    flexDirection: "column",
                     flexWrap: "nowrap",
                   }}
                 >
-                  <Checkbox
-                    onChange={(e) => setCheckedTerms(e.target.checked)}
-                    checkedIcon={<LibraryAddCheckIcon />}
-                  />
-                  <Typography variant="body2" pt={1}>
-                    I agree to the{" "}
-                    <Link mx={1} href="#/">
-                      Terms & Conditions
-                    </Link>{" "}
-                    and confirm that this car is not a commercial vehicle and my
-                    previous policy is a comprehensive/package policy & I
-                    confirm that my vehicle has a valid PUC certificate.
-                  </Typography>
+                  {tncData?.Terms.map((terms, idx) => (
+                    <Box
+                      component="div"
+                      sx={{
+                        display: "flex",
+                        alignItems: "start",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Checkbox
+                        onChange={handleCheckboxChange(idx)}
+                        checked={checkedTerms[idx]}
+                        checkedIcon={<LibraryAddCheckIcon />}
+                      />
+                      <Typography variant="body2" pt={1}>
+                        I agree to the{" "}
+                        <Link mx={1} href="#/">
+                          Terms & Conditions
+                        </Link>
+                        {terms?.TermsMessage}
+                      </Typography>
+                    </Box>
+                  ))}
                 </FormGroup>
               </Grid>
               <Grid item xs={12} mt={2}>
@@ -1101,7 +1128,7 @@ const Payment = (props) => {
                     onClick={() => handlePayNow()}
                     variant="contained"
                     fullWidth
-                    disabled={!kycStatus}
+                    disabled={!kycStatus || !allTermsChecked}
                   >
                     Pay Now
                   </Button>
@@ -1173,6 +1200,31 @@ const Payment = (props) => {
           </Box>
         </>
       )}
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={openKycModal}
+        onClose={handleKycModalClose}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={openKycModal}>
+          <Box sx={style}>
+            <Typography id="transition-modal-title" variant="h6" component="h2">
+              Text in a modal
+            </Typography>
+            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </Typography>
+          </Box>
+        </Fade>
+      </Modal>
     </>
   );
 };

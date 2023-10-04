@@ -198,7 +198,6 @@ const AddressDetails = (props) => {
                     inputProps={{ accept: ".pdf,.doc,.docx" }} // Define accepted file types
                     variant="outlined"
                     fullWidth
-                    disabled={isFileUploadDisabled}
                   />
                   <small style={{ color: "red" }}>
                     {props.errors.file &&
@@ -246,7 +245,6 @@ const AddressDetails = (props) => {
                     inputProps={{ accept: ".pdf,.doc,.docx" }} // Define accepted file types
                     variant="outlined"
                     fullWidth
-                    disabled={isFileUploadDisabled}
                   />
                   <small style={{ color: "red" }}>
                     {props.errors.file &&
