@@ -68,7 +68,10 @@ const Thankyou = () => {
   return (
     <>
       <Backdrop
-        sx={{ color: "primary.main", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          color: "primary.main",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
         open={loading}
       >
         <CircularProgress color="inherit" />
@@ -94,7 +97,7 @@ const Thankyou = () => {
                         display: "block",
                         p: "8px 16px",
                         background: "#FCEAD9",
-                        borderRadius: "5px"
+                        borderRadius: "5px",
                       }}
                     >
                       <Typography variant="body1">
@@ -109,7 +112,7 @@ const Thankyou = () => {
                         display: "block",
                         p: "8px 16px",
                         background: "#FCEAD9",
-                        borderRadius: "5px"
+                        borderRadius: "5px",
                       }}
                     >
                       <Typography variant="body1">
@@ -124,7 +127,7 @@ const Thankyou = () => {
                         display: "block",
                         p: "8px 16px",
                         background: "#FCEAD9",
-                        borderRadius: "5px"
+                        borderRadius: "5px",
                       }}
                     >
                       <Typography variant="body1">
@@ -139,7 +142,7 @@ const Thankyou = () => {
                         display: "block",
                         p: "8px 16px",
                         background: "#FCEAD9",
-                        borderRadius: "5px"
+                        borderRadius: "5px",
                       }}
                     >
                       <Typography variant="body1">

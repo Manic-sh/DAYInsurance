@@ -150,7 +150,7 @@ const AddressDetails = (props) => {
           // if (!PinCodeType) {
           //   values.PostCode = values.PostCodeSelect;
           // }
-          props.goNext(values, 2);
+          props.goNext(values, 4);
         }}
       >
         {(props) => (

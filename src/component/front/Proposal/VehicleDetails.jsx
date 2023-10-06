@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -16,9 +16,8 @@ import { getSnapshot } from "mobx-state-tree";
 import * as Yup from "yup";
 
 const VehicleDetails = (props) => {
-  const { store,handleBack } = props;
+  const { store, handleBack } = props;
   const saveDetails = store.insurance.getSaveDetails();
-
 
   const [isBrandNewVehicle] = useState(() => {
     // console.log('saveDetails',saveDetails);
@@ -80,36 +79,46 @@ const VehicleDetails = (props) => {
       /^[A-Za-z0-9/-]+$/,
       "Special Symbols not allowed"
     ),
-    RegistrationNumber: Yup.string().when({
-      is: () => {
-        return !isBrandNewVehicle;
-      },
-      then: Yup.string()
-        .required("Required Vehicle Number")
-        .matches(specialSymbolRegx, "Special Symbols not allowed")
-        .matches(/[0-9]{4}$/, "Last 4 Character must be number")
-        // .matches(/^[A-Za-z]{1}/, "First Character must be Alphabet")
-        .max(7, "Maximum 7 characters allowed")
-        .min(5, "Minimum 5 characters required"),
-    }).when({
-      is: (value) => {
-        return value !== undefined && value.length===5;
-      },
-      then: Yup.string()
-      .matches(/^[A-Za-z]{1}/, "First Character must be Alphabet")
-    }).when({
-      is: (value) => {
-        return value !== undefined && value.length===6;
-      },
-      then: Yup.string()
-      .matches(/^[A-Za-z]{2}/, "Second Character must be Alphabet")
-    }).when({
-      is: (value) => {
-        return value !== undefined && value.length===7;
-      },
-      then: Yup.string()
-      .matches(/^[A-Za-z]{3}/, "Third Character must be Alphabet")
-    }),
+    RegistrationNumber: Yup.string()
+      .when({
+        is: () => {
+          return !isBrandNewVehicle;
+        },
+        then: Yup.string()
+          .required("Required Vehicle Number")
+          .matches(specialSymbolRegx, "Special Symbols not allowed")
+          .matches(/[0-9]{4}$/, "Last 4 Character must be number")
+          // .matches(/^[A-Za-z]{1}/, "First Character must be Alphabet")
+          .max(7, "Maximum 7 characters allowed")
+          .min(5, "Minimum 5 characters required"),
+      })
+      .when({
+        is: (value) => {
+          return value !== undefined && value.length === 5;
+        },
+        then: Yup.string().matches(
+          /^[A-Za-z]{1}/,
+          "First Character must be Alphabet"
+        ),
+      })
+      .when({
+        is: (value) => {
+          return value !== undefined && value.length === 6;
+        },
+        then: Yup.string().matches(
+          /^[A-Za-z]{2}/,
+          "Second Character must be Alphabet"
+        ),
+      })
+      .when({
+        is: (value) => {
+          return value !== undefined && value.length === 7;
+        },
+        then: Yup.string().matches(
+          /^[A-Za-z]{3}/,
+          "Third Character must be Alphabet"
+        ),
+      }),
     zeroDepth: Yup.string().required("filed is Required"),
     EngineNumber: Yup.string()
       .matches(specialSymbolRegx, "Special Symbols not allowed")
@@ -126,8 +135,6 @@ const VehicleDetails = (props) => {
       then: Yup.string().required("car financer is Required"),
     }),
   });
-
-
 
   return (
     <>
@@ -157,8 +164,7 @@ const VehicleDetails = (props) => {
         }}
         validationSchema={VehicleDetailSchema}
         onSubmit={async (values) => {
-          await props.goNext(values, 4);
-         
+          await props.goNext(values, 1);
         }}
       >
         {(props) => (
@@ -267,8 +273,11 @@ const VehicleDetails = (props) => {
                     maxLength: 7,
                     minLength: 5,
                   }}
-                  onChange={ (value)=>{
-                    props.setFieldValue("RegistrationNumber", value.target.value.toUpperCase())
+                  onChange={(value) => {
+                    props.setFieldValue(
+                      "RegistrationNumber",
+                      value.target.value.toUpperCase()
+                    );
                   }}
                   onBlur={props.handleBlur}
                   value={props.values.RegistrationNumber}
@@ -582,68 +591,68 @@ const VehicleDetails = (props) => {
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
-                      <MobileDatePicker
-                        toolbarPlaceholder=""
-                        toolbarTitle="Select TP Start Date"
-                        label="TP Start Date"
-                        value={props.values.TPStartDate}
-                        name="TPStartDate"
-                        disableCloseOnSelect={false}
-                        onBlur={props.handleBlur}
-                        onChange={(newValue) => {
-                          props.setFieldValue("TPStartDate", newValue);
-                        }}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            fullWidth
-                            name="TPStartDate"
-                            error={
-                              props.errors.TPStartDate &&
-                              props.touched.TPStartDate
-                                ? true
-                                : false
-                            }
-                            helperText={
-                              props.errors.TPStartDate &&
-                              props.touched.TPStartDate
-                                ? props.errors.TPStartDate
-                                : null
-                            }
-                          />
-                        )}
-                      />
+                    <MobileDatePicker
+                      toolbarPlaceholder=""
+                      toolbarTitle="Select TP Start Date"
+                      label="TP Start Date"
+                      value={props.values.TPStartDate}
+                      name="TPStartDate"
+                      disableCloseOnSelect={false}
+                      onBlur={props.handleBlur}
+                      onChange={(newValue) => {
+                        props.setFieldValue("TPStartDate", newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          name="TPStartDate"
+                          error={
+                            props.errors.TPStartDate &&
+                            props.touched.TPStartDate
+                              ? true
+                              : false
+                          }
+                          helperText={
+                            props.errors.TPStartDate &&
+                            props.touched.TPStartDate
+                              ? props.errors.TPStartDate
+                              : null
+                          }
+                        />
+                      )}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
-                      <MobileDatePicker
-                        toolbarPlaceholder=""
-                        toolbarTitle="Select TP End Date"
-                        label="TP End Date"
-                        value={props.values.TPEndDate}
-                        name="TPEndDate"
-                        disableCloseOnSelect={false}
-                        onBlur={props.handleBlur}
-                        onChange={(newValue) => {
-                          props.setFieldValue("TPEndDate", newValue);
-                        }}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            fullWidth
-                            name="TPEndDate"
-                            error={
-                              props.errors.TPEndDate && props.touched.TPEndDate
-                                ? true
-                                : false
-                            }
-                            helperText={
-                              props.errors.TPEndDate && props.touched.TPEndDate
-                                ? props.errors.TPEndDate
-                                : null
-                            }
-                          />
-                        )}
-                      />
+                    <MobileDatePicker
+                      toolbarPlaceholder=""
+                      toolbarTitle="Select TP End Date"
+                      label="TP End Date"
+                      value={props.values.TPEndDate}
+                      name="TPEndDate"
+                      disableCloseOnSelect={false}
+                      onBlur={props.handleBlur}
+                      onChange={(newValue) => {
+                        props.setFieldValue("TPEndDate", newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          name="TPEndDate"
+                          error={
+                            props.errors.TPEndDate && props.touched.TPEndDate
+                              ? true
+                              : false
+                          }
+                          helperText={
+                            props.errors.TPEndDate && props.touched.TPEndDate
+                              ? props.errors.TPEndDate
+                              : null
+                          }
+                        />
+                      )}
+                    />
                   </Grid>
                 </>
               )}

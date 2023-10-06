@@ -18,7 +18,7 @@ import OwnerDetails from "./OwnerDetails";
 import ShowDetail from "./ShowDetail";
 import VehicleDetails from "./VehicleDetails";
 
-const steps = ["Owner", "Address", "Nominee", "Vehicle", "Proposal"];
+const steps = ["Vehicle", "Owner", "Nominee", "Address", "Proposal"];
 
 export default function HorizontalLinearStepper(props) {
   const { item, store, itemUpdateCall } = props;
@@ -32,24 +32,6 @@ export default function HorizontalLinearStepper(props) {
     const EnqNo = store.insurance.getEnqNo();
     let obj = values;
     if (index === 1) {
-      obj.DOB = Moment(values.DOB, ["MM/DD/YYYY"]).format("YYYY/MM/DD");
-      obj.EnquiryNo = EnqNo;
-      await store.proposal.setOwnerDetails(obj);
-      await store.proposal.saveProposalDetails(obj);
-    } else if (index === 2) {
-      obj.EnquiryNo = EnqNo;
-      await store.proposal.setAddressDetails(obj);
-      delete obj.state;
-      delete obj.city;
-      await store.proposal.saveProposalDetails(obj);
-    } else if (index === 3) {
-      obj.EnquiryNo = EnqNo;
-      obj.NomineeName = obj.firstName + " " + obj.lastName;
-      await store.proposal.setNomineeDetails(obj);
-      delete obj.firstName;
-      delete obj.lastName;
-      await store.proposal.saveNomineeDetails(obj);
-    } else if (index === 4) {
       setLoader(true);
       obj.EnquiryNo = EnqNo;
       obj.InstitutionCode = obj.selectedFinancer.CODE;
@@ -72,6 +54,24 @@ export default function HorizontalLinearStepper(props) {
         itemUpdateCall();
         setLoader(false);
       }, 10000);
+    } else if (index === 2) {
+      obj.DOB = Moment(values.DOB, ["MM/DD/YYYY"]).format("YYYY/MM/DD");
+      obj.EnquiryNo = EnqNo;
+      await store.proposal.setOwnerDetails(obj);
+      await store.proposal.saveProposalDetails(obj);
+    } else if (index === 3) {
+      obj.EnquiryNo = EnqNo;
+      obj.NomineeName = obj.firstName + " " + obj.lastName;
+      await store.proposal.setNomineeDetails(obj);
+      delete obj.firstName;
+      delete obj.lastName;
+      await store.proposal.saveNomineeDetails(obj);
+    } else if (index === 4) {
+      obj.EnquiryNo = EnqNo;
+      await store.proposal.setAddressDetails(obj);
+      delete obj.state;
+      delete obj.city;
+      await store.proposal.saveProposalDetails(obj);
     }
     setActiveStep(() => index);
   };
@@ -143,14 +143,14 @@ export default function HorizontalLinearStepper(props) {
         <React.Fragment>
           <Box sx={{ pt: 2, minHeight: "455px" }}>
             {activeStep === 0 && (
-              <OwnerDetails
+              <VehicleDetails
                 {...props}
                 goNext={goNext}
                 handleBack={handleBack}
               />
             )}
             {activeStep === 1 && (
-              <AddressDetails
+              <OwnerDetails
                 {...props}
                 goNext={goNext}
                 handleBack={handleBack}
@@ -164,7 +164,7 @@ export default function HorizontalLinearStepper(props) {
               />
             )}
             {activeStep === 3 && (
-              <VehicleDetails
+              <AddressDetails
                 {...props}
                 goNext={goNext}
                 handleBack={handleBack}

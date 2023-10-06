@@ -23,7 +23,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import { get, size } from "lodash";
+import { get, size, toLower } from "lodash";
 import AddonsFullName from "../../../services/Addons";
 import AdditionalData, {
   getAdditionalTooltip,
@@ -144,10 +144,11 @@ const Payment = (props) => {
       };
       setLoading(true);
       const hitRes = await store.proposal.saveProposalService(payload);
-      if (hitRes?.KYCStatus === "Fail" || true) {
+      if (toLower(hitRes?.KYCStatus) === "fail") {
         setKYCStatus(false);
         const url = hitRes?.KycUrl;
         setOpenKycModal(true);
+        setLoading(false);
       } else if (hitRes.PaymentURLType === "HTML") {
         setHtml(hitRes.PaymentURL);
         const formId = document
@@ -1216,6 +1217,7 @@ const Payment = (props) => {
       >
         <Fade in={openKycModal}>
           <Box sx={style}>
+            <Button onClick={handleKycModalClose}>Close</Button>
             <Typography id="transition-modal-title" variant="h6" component="h2">
               Text in a modal
             </Typography>

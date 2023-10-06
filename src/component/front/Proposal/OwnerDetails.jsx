@@ -1,6 +1,6 @@
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -81,7 +81,7 @@ const OwnerDetails = (props) => {
         }}
         validationSchema={OwnerDetailSchema}
         onSubmit={(values) => {
-          props.goNext(values, 1);
+          props.goNext(values, 2);
         }}
       >
         {(props) => (
@@ -114,7 +114,6 @@ const OwnerDetails = (props) => {
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <TextField
-               
                   onChange={props.handleChange}
                   onBlur={props.handleBlur}
                   value={props.values.CustomerName}
@@ -137,7 +136,6 @@ const OwnerDetails = (props) => {
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <TextField
-               
                   onChange={props.handleChange}
                   onBlur={props.handleBlur}
                   value={props.values.LastName}
@@ -243,33 +241,33 @@ const OwnerDetails = (props) => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
-                  <MobileDatePicker
-                    toolbarPlaceholder=""
-                    toolbarTitle="Select a Date of Birth"
-                    label="Date Of Birth"
-                    value={props.values.DOB}
-                    name="DOB"
-                    disableCloseOnSelect={false}
-                    onBlur={props.handleBlur}
-                    onChange={(newValue) => {
-                      props.setFieldValue("DOB", newValue);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        name="DOB"
-                        error={
-                          props.errors.DOB && props.touched.DOB ? true : false
-                        }
-                        helperText={
-                          props.errors.DOB && props.touched.DOB
-                            ? props.errors.DOB
-                            : null
-                        }
-                      />
-                    )}
-                  />
+                <MobileDatePicker
+                  toolbarPlaceholder=""
+                  toolbarTitle="Select a Date of Birth"
+                  label="Date Of Birth"
+                  value={props.values.DOB}
+                  name="DOB"
+                  disableCloseOnSelect={false}
+                  onBlur={props.handleBlur}
+                  onChange={(newValue) => {
+                    props.setFieldValue("DOB", newValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      name="DOB"
+                      error={
+                        props.errors.DOB && props.touched.DOB ? true : false
+                      }
+                      helperText={
+                        props.errors.DOB && props.touched.DOB
+                          ? props.errors.DOB
+                          : null
+                      }
+                    />
+                  )}
+                />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <Autocomplete
@@ -283,7 +281,7 @@ const OwnerDetails = (props) => {
                     option.value === value.value
                   }
                   onChange={(e, value) => {
-                    props.setFieldValue("Occupation", get(value,'CODE',''));
+                    props.setFieldValue("Occupation", get(value, "CODE", ""));
                     props.setFieldValue("occupationlist", value);
                   }}
                   renderInput={(params) => (

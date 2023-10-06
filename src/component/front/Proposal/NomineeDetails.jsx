@@ -12,7 +12,7 @@ import * as Yup from "yup";
 import { get } from "lodash";
 import Autocomplete from "@mui/material/Autocomplete";
 const NomineeDetails = (props) => {
-  const { store,handleBack } = props;
+  const { store, handleBack } = props;
   const nomineeDetails = getSnapshot(store.proposal.nomineeDetails);
   const nomineeRelastiones = getSnapshot(store.proposal.nomineeRelastiones);
   const NomineeName = nomineeDetails.NomineeName.split(" ");
@@ -69,7 +69,6 @@ const NomineeDetails = (props) => {
         .required("Age is Required"),
     }),
   });
-
 
   const selectedNomineeRelastion = get(nomineeDetails, "nomineeRelastion", {});
   return (
