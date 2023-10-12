@@ -206,6 +206,7 @@ const AddressDetails = (props) => {
                   </small>
                 </FormControl>
               </Grid>
+              <Grid item xs={12} sm={6} md={4}></Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <TextField
                   inputProps={{
@@ -253,6 +254,7 @@ const AddressDetails = (props) => {
                   </small>
                 </FormControl>
               </Grid>
+              <Grid item xs={12} sm={6} md={4}></Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <Autocomplete
                   id="document-type"
@@ -302,6 +304,7 @@ const AddressDetails = (props) => {
                   </small>
                 </FormControl>
               </Grid>
+              <Grid item xs={12} sm={6} md={4}></Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <TextField
                   label="Address 1"

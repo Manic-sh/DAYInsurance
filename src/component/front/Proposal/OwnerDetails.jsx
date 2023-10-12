@@ -336,6 +336,66 @@ const OwnerDetails = (props) => {
                   </RadioGroup>
                 </FormControl>
               </Grid>
+
+              <Grid item xs={12} sm={6} md={4}>
+                <TextField
+                  inputProps={{
+                    autoComplete: "new-password",
+                    maxLength: 12,
+                  }}
+                  label="Aadhar No"
+                  variant="outlined"
+                  fullWidth
+                  onChange={(e) => {
+                    e.target.value.match("^[0-9]*$") &&
+                      props.setFieldValue("AadharNo", e.target.value);
+                  }}
+                  onBlur={props.handleBlur}
+                  name="AadharNo"
+                  value={props.values.AadharNo}
+                  error={
+                    props.errors.AadharNo && props.touched.AadharNo
+                      ? true
+                      : false
+                  }
+                  helperText={
+                    props.errors.AadharNo && props.touched.AadharNo
+                      ? props.errors.AadharNo
+                      : null
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <TextField
+                  label="Pan Number"
+                  variant="outlined"
+                  fullWidth
+                  onChange={(e) => {
+                    e.target.value.match("^[a-zA-Z0-9]*$") &&
+                      props.setFieldValue(
+                        "PanNumber",
+                        e.target.value.toUpperCase()
+                      );
+                  }}
+                  inputProps={{
+                    autoComplete: "new-password",
+                    maxLength: 10,
+                  }}
+                  onBlur={props.handleBlur}
+                  name="PanNumber"
+                  value={props.values.PanNumber}
+                  error={
+                    props.errors.PanNumber && props.touched.PanNumber
+                      ? true
+                      : false
+                  }
+                  helperText={
+                    props.errors.PanNumber && props.touched.PanNumber
+                      ? props.errors.PanNumber
+                      : null
+                  }
+                />
+              </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <FormControl component="fieldset">
                   <FormLabel component="legend">
