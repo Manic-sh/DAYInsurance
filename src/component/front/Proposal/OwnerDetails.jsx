@@ -78,6 +78,8 @@ const OwnerDetails = (props) => {
           MaritalStatus: ownerDetails.MaritalStatus,
           VehicleOwnedBy: ownerDetails.VehicleOwnedBy,
           GSTNumber: ownerDetails.GSTNumber,
+          PanNumber: ownerDetails.PanNumber,
+          AadharNo: ownerDetails.AadharNo,
         }}
         validationSchema={OwnerDetailSchema}
         onSubmit={(values) => {

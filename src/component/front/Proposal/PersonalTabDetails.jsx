@@ -317,7 +317,7 @@ const PersonalTabDetails = (props) => {
               sx={{ fontWeight: 500 }}
               gutterBottom
             >
-              {getAddressDetails.state.StateName}
+              {getAddressDetails?.state?.StateName}
             </Typography>
           </Box>
         </Grid>
@@ -339,7 +339,7 @@ const PersonalTabDetails = (props) => {
               sx={{ fontWeight: 500 }}
               gutterBottom
             >
-              {getAddressDetails.city.CityName}
+              {getAddressDetails?.city?.CityName}
             </Typography>
           </Box>
         </Grid>

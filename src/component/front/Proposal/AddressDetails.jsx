@@ -147,9 +147,6 @@ const AddressDetails = (props) => {
         }}
         validationSchema={AddressDetailSchema}
         onSubmit={(values) => {
-          // if (!PinCodeType) {
-          //   values.PostCode = values.PostCodeSelect;
-          // }
           props.goNext(values, 4);
         }}
       >

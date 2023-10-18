@@ -23,6 +23,7 @@ const steps = ["Vehicle", "Owner", "Nominee", "Address", "Proposal"];
 export default function HorizontalLinearStepper(props) {
   const { item, store, itemUpdateCall } = props;
   const [activeStep, setActiveStep] = useState(0);
+  const [kycStatus, setKycStatus] = useState(false);
   const [loader, setLoader] = useState(false);
 
   let ownerDetails = getSnapshot(store.proposal.ownerDetails);
@@ -48,18 +49,27 @@ export default function HorizontalLinearStepper(props) {
       setTimeout(async () => {
         await store.proposal.fetchRehitePremium(item);
         EventEmitter.dispatch("tncData", tnc.data);
-        activeStep === 3
-          ? EventEmitter.dispatch("showPaymentMethod", true)
-          : EventEmitter.dispatch("showPaymentMethod", false);
         itemUpdateCall();
         setLoader(false);
-      }, 10000);
+      }, 2000);
     } else if (index === 2) {
       obj.DOB = Moment(values.DOB, ["MM/DD/YYYY"]).format("YYYY/MM/DD");
       obj.EnquiryNo = EnqNo;
       await store.proposal.setOwnerDetails(obj);
       await store.proposal.saveProposalDetails(obj);
+      const KycDetails = await store.proposal.fetchKYCStatus(124, EnqNo);
+      setKycStatus(true);
+      if (KycDetails?.data?.data?.Kycstatus === "Fail" || kycStatus) {
+        console.log("KYC Status");
+        setActiveStep(() => 4); // Skip step 3, go directly to step 4
+        return; // Exit the function to prevent further execution
+      }
     } else if (index === 3) {
+      if (kycStatus) {
+        EventEmitter.dispatch("showPaymentMethod", true);
+        setActiveStep(() => 4); // Skip step 3, go directly to step 4
+        return; // Exit the function to prevent further execution
+      }
       obj.EnquiryNo = EnqNo;
       obj.NomineeName = obj.firstName + " " + obj.lastName;
       await store.proposal.setNomineeDetails(obj);

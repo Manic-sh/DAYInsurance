@@ -44,6 +44,8 @@ export const OwnerDetails = types.model({
   VehicleOwnedBy: types.optional(types.string, "1"),
   EnquiryNo: types.optional(types.string, ""),
   GSTNumber: types.optional(types.string, "0"),
+  PanNumber: types.optional(types.string, ""),
+  AadharNo: types.optional(types.string, ""),
 });
 export const AnyJsonValue = types.union(
   types.string,

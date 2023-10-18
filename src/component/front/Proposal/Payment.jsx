@@ -169,20 +169,20 @@ const Payment = (props) => {
     }
   };
 
-  const handleKYCCheck = async () => {
-    const EnqNo = store.insurance.getEnqNo();
-    const CompanyId = 124; // Companyid = 124;
-    const KycDetails = await store.proposal.fetchKYCStatus(CompanyId, EnqNo);
+  // const handleKYCCheck = async () => {
+  //   const EnqNo = store.insurance.getEnqNo();
+  //   const CompanyId = 124; // Companyid = 124;
+  //   const KycDetails = await store.proposal.fetchKYCStatus(CompanyId, EnqNo);
 
-    if (KycDetails?.data?.data?.Kycstatus === "Fail") {
-      const url = KycDetails?.data?.data?.KycURL;
-      window.open(url, "_blank");
-      console.log("KYC Status call API");
-    } else {
-      setKYCStatus(true);
-    }
-  };
-  console.log(tncData);
+  //   if (KycDetails?.data?.data?.Kycstatus === "Fail") {
+  //     const url = KycDetails?.data?.data?.KycURL;
+  //     window.open(url, "_blank");
+  //     console.log("KYC Status call API");
+  //   } else {
+  //     setKYCStatus(true);
+  //   }
+  // };
+
   return (
     <>
       <Backdrop
